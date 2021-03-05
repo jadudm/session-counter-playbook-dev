@@ -1,0 +1,6 @@
+# download, build, and install racket
+- name: ping test
+  ping:
+
+# changelog
+# 20210305 MCJ initial configuration.
