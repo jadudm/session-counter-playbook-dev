@@ -1,6 +1,4 @@
 ---
 - hosts: pi
-  vars_files:
-    - roles/racket/vars/main.yaml
   roles:
     - racket
