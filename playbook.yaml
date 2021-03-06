@@ -2,3 +2,4 @@
 - hosts: pi
   roles:
     - racket
+    - session-counter

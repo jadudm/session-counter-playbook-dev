@@ -1,0 +1,25 @@
+
+- name: checkout session-counter
+  ansible.builtin.git:
+    repo: https://github.com/jadudm/session-counter
+    dest: "{{ session_counter_src }}"
+
+- name: create .session-counter
+  ansible.builtin.file:
+    path: "{{ session_counter_assets }}"
+    state: directory
+
+- name: compile session-counter
+  ansible.builtin.command:
+    cmd: raco exe -o session-counter session-counter.rkt
+    chdir: "{{ session_counter_src }}"
+
+- name: prep for dist
+  ansible.builtin.command:
+    cmd: raco distribute {{ session_counter_assets}}/ session-counter
+    chdir: "{{ session_counter_src }}"
+
+- name: copy in manufacturer db
+  ansible.builtin.copy:
+    src: files/.session-counter/manufacturers.sqlite
+    dest: "{{ session_counter_assets}}/manufacturers.sqlite"
