@@ -2,12 +2,5 @@
 - hosts: pi
   vars_files:
     - roles/racket/vars/main.yaml
-  tasks:
-    - name: is racket installed?
-      stat:
-        path: "{{ racket_build_dir }}/{{ racket_bin }}/{{ racket_exe }}"
-      register: racket_installed
-    - name: install racket
-      ansible.builtin.include_role:
-        name: racket
-      when: racket_installed.stat.exists is defined and racket_installed.stat.exists == false
+  roles:
+    - racket

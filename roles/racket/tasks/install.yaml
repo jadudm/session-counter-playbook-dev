@@ -1,0 +1,39 @@
+# download, build, and install racket
+- name: racket ping test
+  ping:
+  
+- name: check if we have downloaded racket v8
+  stat:
+    path: "{{ racket_build_dir }}/{{ racket_tgz }}"
+  register: tgz
+
+- name: create build directory
+  ansible.builtin.file:
+    path: "{{ racket_build_dir }}"
+    state: directory
+
+- name: pull v8 for build
+  get_url:
+    url: "{{ racket_url }}/{{ racket_tgz }}"
+    dest: "{{ racket_build_dir }}"
+  when: tgz.stat.exists is defined and not tgz.stat.exists
+
+- name: decompress
+  ansible.builtin.unarchive: 
+    src: "{{ racket_build_dir }}/{{ racket_tgz }}"
+    dest: "{{ racket_build_dir }}"
+
+- name: configure
+  command: 
+    cmd: ./configure
+    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
+
+- name: make
+  command:
+    cmd: make
+    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
+
+- name: make install
+  command:
+    cmd: make install
+    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
