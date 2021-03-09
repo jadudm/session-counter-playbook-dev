@@ -25,15 +25,11 @@
 
 - name: configure
   command: 
-    cmd: ./configure
+    cmd: ./configure PREFIX=/opt/racket
     chdir: "{{ racket_build_dir }}/{{ racket_src }}"
 
-- name: make
+- name: make and install
   command:
-    cmd: make
-    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
-
-- name: make install
-  command:
-    cmd: make install
+    # Base should skip building packages.
+    cmd: make base PREFIX=/opt/racket CPUS=4
     chdir: "{{ racket_build_dir }}/{{ racket_src }}"
