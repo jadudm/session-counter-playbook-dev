@@ -3,6 +3,7 @@
     repo: '{{ sc["repos"] }}'
     dest: '{{ sc["src"] }}'
     update: yes
+    version: '{{ sc["version"] }}'
 
 - name: create install path
   ansible.builtin.file:

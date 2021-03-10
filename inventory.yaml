@@ -15,6 +15,9 @@ all:
       install_path: "/opt/racket"
     sc:
       repos: https://github.com/jadudm/session-counter
+      # This can be a branch or a tag.
+      version: main
       src: /home/pi/session-counter
       install: /opt/session-counter
       bin: /opt/session-counter/bin
+      
