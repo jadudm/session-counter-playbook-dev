@@ -1,8 +1,8 @@
-
 - name: checkout session-counter
   ansible.builtin.git:
     repo: '{{ sc["repos"] }}'
     dest: '{{ sc["src"] }}'
+    update: yes
 
 - name: create install path
   ansible.builtin.file:
