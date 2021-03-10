@@ -3,16 +3,16 @@
 # bogdanp's built set.
 # https://github.com/Bogdanp/racksnaps
 # Using the release set and March 6, 2021
-- name: lock racket packages
+- name: lock racket package sources
   ansible.builtin.command:
     cmd: >
-      raco pkg config --scope installation --set catalogs \
-      https://download.racket-lang.org/releases/8.0/catalog/ \
+      {{ racket["raco"] }} pkg config -i --set catalogs 
+      https://download.racket-lang.org/releases/8.0/catalog/ 
       https://racksnaps.defn.io/snapshots/2021/03/06/catalog/
 
 - name: install packages needed for monitoring
   ansible.builtin.command:
-    cmd: raco pkg install --skip-installed --auto {{ item }}
+    cmd: '{{ racket["raco"] }} pkg install -i --skip-installed --auto {{ item }}'
   loop:
     - gregor
     - http-easy

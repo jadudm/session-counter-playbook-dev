@@ -1,7 +1,0 @@
-racket_url: "https://mirror.racket-lang.org/installers/8.0/"
-racket_tgz: "racket-8.0-src.tgz"
-racket_build_dir: "/home/pi/racket"
-racket_bin: "racket-8.0/bin"
-racket_src: "racket-8.0/src"
-racket_exe: "racket"
-raco_exe: "raco"

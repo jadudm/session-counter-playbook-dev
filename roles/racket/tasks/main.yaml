@@ -1,14 +1,16 @@
-- name: is racket v8.0 installed?
-  ansible.builtin.command:
-    cmd: "{{ racket_build_dir }}/{{ racket_bin }}/{{ racket_exe }} --version"
-  register: racket_version
+- name: is racket installed?
+  stat:
+    path: '{{ racket["exe"] }}'
+  register: racket_exe
 
-- name: install racket
+- name: build and install racket if needed
   ansible.builtin.include_tasks: install.yaml
-  when: racket_version.rc != 0 or "v8.0" not in racket_version.stdout
+  when: not racket_exe.stat.exists
 
 - name: configure racket
   ansible.builtin.include_tasks: configure.yaml
-
+  # when: not racket_exe.stat.exists
+  
 # changelog
+# 20210309 updated as a repeatable "dev only" configuration
 # 20210305 MCJ initial configuration.

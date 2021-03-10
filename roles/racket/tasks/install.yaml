@@ -4,32 +4,40 @@
   
 - name: check if we have downloaded racket v8
   stat:
-    path: "{{ racket_build_dir }}/{{ racket_tgz }}"
+    path: '{{ racket["build_dir"] }}/{{ racket["tgz"] }}'
   register: tgz
 
 - name: create build directory
   ansible.builtin.file:
-    path: "{{ racket_build_dir }}"
+    path: '{{ racket["build_dir"] }}'
     state: directory
 
 - name: pull v8 for build
   get_url:
-    url: "{{ racket_url }}/{{ racket_tgz }}"
-    dest: "{{ racket_build_dir }}"
+    url: '{{ racket["url"] }}/{{ racket["tgz"] }}'
+    dest: '{{ racket["build_dir"] }}'
   when: tgz.stat.exists is defined and not tgz.stat.exists
 
 - name: decompress
   ansible.builtin.unarchive: 
-    src: "{{ racket_build_dir }}/{{ racket_tgz }}"
-    dest: "{{ racket_build_dir }}"
+    src: '{{ racket["build_dir"] }}/{{ racket["tgz"] }}'
+    dest: '{{ racket["build_dir"] }}'
+
+- name: create a destination directory
+  ansible.builtin.file:
+    path: /opt/racket
+    state: directory
+    owner: pi
+    group: pi
+    mode: u=rwx,g=rx,o=rx
+  become: yes
 
 - name: configure
   command: 
-    cmd: ./configure PREFIX=/opt/racket
-    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
+    cmd: ./configure --prefix '{{ racket["install_path"] }}'
+    chdir: '{{ racket["build_dir"] }}/{{ racket["src"] }}'
 
 - name: make and install
   command:
-    # Base should skip building packages.
-    cmd: make base PREFIX=/opt/racket CPUS=4
-    chdir: "{{ racket_build_dir }}/{{ racket_src }}"
+    cmd: make install CPUS=4
+    chdir: '{{ racket["build_dir"] }}/{{ racket["src"] }}'

@@ -1,5 +1,6 @@
 ---
 - hosts: pi
+  connection: local
   roles:
     - racket
     - session-counter
