@@ -1,0 +1,16 @@
+- name: commit session-counter product
+  ansible.builtin.include_tasks: session-counter.yaml
+  when: commit is defined
+
+- name: tag the prod repos
+  ansible.builtin.command:
+    chdir: '{{ prod["src"] }}'
+    cmd: git tag -a {{ commit }} -m "auto tag for release {{ commit }}"
+  when: commit is defined
+
+- name: push the tags
+  ansible.builtin.command:
+    chdir: '{{ prod["src"] }}'
+    cmd: git push origin --tags
+  when: commit is defined
+    

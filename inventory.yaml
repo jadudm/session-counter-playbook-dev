@@ -16,8 +16,10 @@ all:
     sc:
       repos: https://github.com/jadudm/session-counter
       # This can be a branch or a tag.
-      version: main
-      src: /home/pi/session-counter
-      install: /opt/session-counter
-      bin: /opt/session-counter/bin
+      branch: main
+      src: /home/pi/git/imls/session-counter
+    dist:
+      repo: git@github.com:jadudm/session-counter-playbook-dist.git
+      src: /home/pi/git/imls/session-counter-playbook-dist
+      branch: dev
       

@@ -6,10 +6,6 @@
 - name: build and install racket if needed
   ansible.builtin.include_tasks: install.yaml
   when: not racket_exe.stat.exists
-
-- name: configure racket
-  ansible.builtin.include_tasks: configure.yaml
-  # when: not racket_exe.stat.exists
   
 # changelog
 # 20210309 updated as a repeatable "dev only" configuration
