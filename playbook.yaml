@@ -3,8 +3,5 @@
   connection: local
   roles:
     - packages
-    # - racket
-    - session-counter
-    - for-production
   vars:
-    gopath: /home/pi/go/bin
+    golang_version: 1.16.2

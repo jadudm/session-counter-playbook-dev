@@ -3,23 +3,3 @@ all:
     pi: 
       ansible_host: 127.0.0.1
       ansible_python_interpreter: /usr/bin/python
-  vars:
-    racket:
-      url: "https://mirror.racket-lang.org/installers/8.0/"
-      tgz: "racket-8.0-src.tgz"
-      build_dir: "/home/pi/racket"
-      bin: "racket-8.0/bin"
-      src: "racket-8.0/src"
-      exe: "/opt/racket/bin/racket"
-      raco: "/opt/racket/bin/raco"
-      install_path: "/opt/racket"
-    sc:
-      repos: https://github.com/jadudm/session-counter
-      # This can be a branch or a tag.
-      branch: main
-      src: /home/pi/git/imls/session-counter
-    dist:
-      repo: git@github.com:jadudm/session-counter-playbook-dist.git
-      src: /home/pi/git/imls/session-counter-playbook-dist
-      branch: dev
-      

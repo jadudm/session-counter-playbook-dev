@@ -10,3 +10,35 @@
     - gnupg-agent
     - software-properties-common
   become: yes
+
+- name: fetch the version of golang in use
+  ansible.builtin.get_url:
+    url: "https://golang.org/dl/go{{ golang_version }}.linux-armv6l.tar.gz"
+    dest: "/tmp/go{{ golang_version }}.linux-armv6l.tar.gz"
+
+# If the previous step fails, we keep what was locally installed.
+- name: remove prior version of golang
+  ansible.builtin.command:
+    cmd: rm -rf /usr/local/go
+    warn: no
+  become: yes
+
+- name: decompress into /usr/local
+  ansible.builtin.unarchive:
+    src: "/tmp/go{{ golang_version }}.linux-armv6l.tar.gz"
+    dest: /usr/local
+  become: yes
+
+- name: remove the tarball
+  ansible.builtin.file:
+    path: "/tmp/go{{ golang_version }}.linux-armv6l.tar.gz"
+    state: absent
+
+- name: add gopath to .bash_profile
+  ansible.builtin.lineinfile:
+    path: /home/pi/.bash_profile
+    line: "{{ item }}"
+  loop:
+    - export GOPATH=$HOME/go
+    - export PATH=$GOPATH/bin:$PATH
+    - export PATH=/usr/local/go/bin:$PATH
